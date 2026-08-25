@@ -1,0 +1,26 @@
+{% extends "loan_prediction/base.html" %}
+
+{% block title %}Prediction result{% endblock %}
+
+{% block content %}
+<section class="card">
+    <h2>Prediction result</h2>
+
+    {% if approved %}
+        <p class="result result--approved">Loan approved</p>
+    {% else %}
+        <p class="result result--rejected">Loan rejected</p>
+    {% endif %}
+
+    <p class="result__probability">Approval probability: {{ probability }}%</p>
+
+    <h3>Submitted application</h3>
+    <table class="summary">
+        {% for label, value in application.items %}
+            <tr><th>{{ label }}</th><td>{{ value }}</td></tr>
+        {% endfor %}
+    </table>
+
+    <a class="button" href="{% url 'loan_prediction:home' %}">Make another prediction</a>
+</section>
+{% endblock %}

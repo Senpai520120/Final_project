@@ -1,0 +1,48 @@
+LOAN APPROVAL MODEL REPORT
+============================================================
+Rows: 381 (train 304 / test 77)
+
+BEST PARAMETERS (GridSearchCV, 5-fold cross-validation, scoring=f1)
+  classifier__max_depth = 5
+  classifier__min_samples_leaf = 1
+  classifier__min_samples_split = 2
+  classifier__n_estimators = 300
+  best cross-validation F1: 0.888
+
+TEST SET METRICS
+Accuracy : 0.857
+Precision: 0.844
+Recall   : 0.982
+F1-score : 0.908
+ROC-AUC  : 0.817
+
+Classification report:
+              precision    recall  f1-score   support
+
+    Rejected       0.92      0.55      0.69        22
+    Approved       0.84      0.98      0.91        55
+
+    accuracy                           0.86        77
+   macro avg       0.88      0.76      0.80        77
+weighted avg       0.87      0.86      0.84        77
+
+Confusion matrix (rows = actual, columns = predicted):
+[[12 10]
+ [ 1 54]]
+
+FEATURE IMPORTANCE (top 15)
+cat__Credit_History_1.0         0.2628
+cat__Credit_History_0.0         0.2454
+num__CoapplicantIncome          0.1061
+num__ApplicantIncome            0.0941
+num__LoanAmount                 0.0907
+num__Loan_Amount_Term           0.0341
+cat__Property_Area_Semiurban    0.0270
+cat__Property_Area_Rural        0.0177
+cat__Married_No                 0.0156
+cat__Married_Yes                0.0128
+cat__Education_Not Graduate     0.0120
+cat__Education_Graduate         0.0117
+cat__Property_Area_Urban        0.0097
+cat__Self_Employed_No           0.0093
+cat__Dependents_2               0.0090

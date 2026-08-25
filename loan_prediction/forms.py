@@ -136,3 +136,18 @@ class LoanApplicationForm(forms.Form):
         data["Loan_Amount_Term"] = float(data["Loan_Amount_Term"])
         data["Credit_History"] = float(data["Credit_History"])
         return data
+
+    def summary(self):
+        """Return the submitted application as readable (label, value) pairs.
+
+        The result page shows what the user filled in, so it has to use the
+        field labels and the choice labels rather than the raw dataset column
+        names and their encoded values.
+        """
+        rows = []
+        for name, field in self.fields.items():
+            value = self.cleaned_data[name]
+            if isinstance(field, forms.ChoiceField):
+                value = dict(field.choices).get(value, value)
+            rows.append((field.label, value))
+        return rows

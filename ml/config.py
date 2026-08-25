@@ -9,6 +9,8 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 DATA_FILE = BASE_DIR / "data" / "loan_data.csv"
+# Keep this in sync with MODEL_FILE in config/settings.py, which is where
+# the Django view reads the file from.
 MODEL_FILE = BASE_DIR / "models" / "loan_model.joblib"
 PLOTS_DIR = BASE_DIR / "static" / "images"
 REPORT_FILE = BASE_DIR / "ml" / "model_report.txt"

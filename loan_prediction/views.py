@@ -56,5 +56,5 @@ def home(request):
     return render(request, "loan_prediction/result.html", {
         "approved": approved,
         "probability": round(probability, 1),
-        "application": form.cleaned_data,
+        "application": form.summary(),
     })

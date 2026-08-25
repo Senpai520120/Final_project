@@ -51,6 +51,13 @@ class PredictionTests(SimpleTestCase):
         self.assertGreaterEqual(response.context["probability"], 0)
         self.assertLessEqual(response.context["probability"], 100)
 
+    def test_result_page_uses_readable_labels_not_raw_dataset_values(self):
+        response = self.client.post(reverse("loan_prediction:home"), VALID_APPLICATION)
+        self.assertContains(response, "Credit history")
+        self.assertContains(response, "Good — no problems with previous loans")
+        self.assertNotContains(response, "Credit_History")
+        self.assertNotContains(response, "Self_Employed")
+
     def test_bad_credit_history_lowers_the_approval_probability(self):
         good = self.client.post(reverse("loan_prediction:home"), VALID_APPLICATION)
         bad = self.client.post(

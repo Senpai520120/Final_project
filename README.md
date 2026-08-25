@@ -151,13 +151,16 @@ Measured on the 77 held-out test rows (full report in `ml/model_report.txt`):
 | F1-score | 0.908 | Harmonic mean of precision and recall — one number balancing the two. |
 | ROC-AUC | 0.817 | Probability that a random approved application is scored higher than a random rejected one. 0.5 = random guessing. |
 
-Confusion matrix (rows = actual, columns = predicted):
+Confusion matrix (rows = actual, columns = predicted), also saved as
+`static/images/confusion_matrix.png`:
 
 ```
                 predicted N   predicted Y
 actual N             12            10
 actual Y              1            54
 ```
+
+![Confusion matrix](static/images/confusion_matrix.png)
 
 The model is much better at recognising approvals (recall 0.98) than rejections
 (recall 0.55). It rarely refuses a good application, but it does approve 10 of
@@ -234,8 +237,10 @@ final_prodject/
     └── images/                 # generated charts
 ```
 
-The app has no `models.py`: the project does not store anything in a database,
-it only reads a form and returns a prediction.
+The app has no `models.py`: the project does not store anything, it only reads a
+form and returns a prediction. Because of that `DATABASES` is empty and only the
+apps that are actually used (`staticfiles` and `loan_prediction`) are installed —
+there is no database file, no `/admin/` route and no migrations to apply.
 
 ## 10. Installation
 
@@ -281,7 +286,7 @@ Open <http://127.0.0.1:8000/>.
 python manage.py test
 ```
 
-13 tests covering the home page, the form fields, valid and invalid submissions,
+14 tests covering the home page, the form fields, valid and invalid submissions,
 the result page, and the saved pipeline itself.
 
 ## 15. Settings

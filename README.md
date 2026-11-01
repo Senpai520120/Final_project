@@ -4,6 +4,34 @@ A Django web application that predicts whether a loan application would be
 approved. The prediction comes from a scikit-learn Random Forest model trained
 on historical loan data.
 
+**Tech stack:** Python 3.12+, Django 6.1, scikit-learn, pandas, matplotlib / seaborn.
+
+| Input form | Prediction result |
+|---|---|
+| ![Input form](docs/screenshots/form.png) | ![Prediction result](docs/screenshots/result.png) |
+
+## Quick start
+
+Requires **Python 3.12 or newer** (Django 6.1 does not support older versions).
+The trained model is already committed in `models/`, so the app runs right
+after installing the dependencies.
+
+```bash
+git clone https://github.com/Senpai520120/Final_project.git
+cd Final_project
+python -m venv .venv
+.venv\Scripts\activate          # Windows
+# source .venv/bin/activate     # Linux / macOS
+pip install -r requirements.txt
+python manage.py test           # optional: 14 tests
+python manage.py runserver
+```
+
+Open <http://127.0.0.1:8000/>, fill in the form and press **Predict**.
+
+No `migrate` step is needed: the app has no database (see
+[Project structure](#9-project-structure)).
+
 ## 1. Goal
 
 A user fills in a short form (income, loan amount, credit history, …) and the
@@ -203,7 +231,7 @@ with the model, Django can pass the raw form values straight to
 ## 9. Project structure
 
 ```
-final_prodject/
+Final_project/
 ├── manage.py
 ├── requirements.txt
 ├── README.md
@@ -232,6 +260,8 @@ final_prodject/
 │
 ├── models/loan_model.joblib    # trained pipeline
 ├── data/loan_data.csv
+├── docs/screenshots/           # screenshots used in this README
+├── .env.example                # environment variables read by settings.py
 └── static/
     ├── css/style.css
     └── images/                 # generated charts
@@ -258,8 +288,9 @@ python -m ml.analyze_data     # prints the analysis, writes charts to static/ima
 python -m ml.train_model      # trains, evaluates, writes models/loan_model.joblib
 ```
 
-`train_model` must be run at least once before starting the web app, because
-the view loads `models/loan_model.joblib`.
+The view loads `models/loan_model.joblib`. A trained copy is already committed,
+so this step is only needed if you want to retrain the model (training is
+deterministic: `random_state=42` reproduces the same metrics).
 
 ## 12. Running the web application
 
@@ -293,4 +324,6 @@ the result page, and the saved pipeline itself.
 
 `SECRET_KEY` and `DEBUG` are read from the environment
 (`DJANGO_SECRET_KEY`, `DJANGO_DEBUG`) and fall back to development values, so no
-secret is stored in the repository.
+secret is stored in the repository. See `.env.example` for the variables and how
+to generate a key. Before any public deployment set a real `DJANGO_SECRET_KEY`,
+set `DJANGO_DEBUG=False` and extend `ALLOWED_HOSTS`.
